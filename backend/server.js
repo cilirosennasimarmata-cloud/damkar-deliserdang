@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs');
 
 const app = express();
-const PORT = process.env.PORT || 8081;
+const PORT = process.env.PORT || 3000;
 const DATA_DIR = path.join(__dirname, 'data');
 
 app.use(cors()); // biar API ini bisa dipanggil dari app mobile / domain lain
@@ -56,6 +56,7 @@ app.get('/api/program', (req, res) => {
 app.get('/api/berita', (req, res) => {
   try {
     const berita = readJSON('berita.json');
+    // urutkan terbaru dulu
     berita.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
     res.json(berita);
   } catch (e) {
